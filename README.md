@@ -15,7 +15,7 @@
 ## Usage
 
 ```
-$ node watch.js [LINE Notify トークン] [市区町村コード] [日付]
+$ node watch.js [市区町村コード] [日付] [LINE Notify トークン?]
 ```
 
 ## Sample

@@ -3,9 +3,9 @@ import commander from 'commander';
 import querystring from 'querystring';
 
 commander.parse(process.argv);
-const token = commander.args[0];
-const code = commander.args[1];
-const dates = [commander.args[2]];
+const code = commander.args[0];
+const dates = [commander.args[1]];
+const token = commander.args[2];
 
 (async function() {
   const places = {};
@@ -29,7 +29,7 @@ const dates = [commander.args[2]];
     });
   }
 
-  if (times.length > 0) {
+  if (times.length > 0 && token) {
     console.log(times.join("\r\n"));
     await axios({
       method: 'post',
