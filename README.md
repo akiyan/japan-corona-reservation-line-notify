@@ -14,14 +14,20 @@
 
 ## Usage
 
+LINE通知あり
 ```
-$ node watch.js [市区町村コード] [日付] [LINE Notify トークン?]
+$ node watch.js [市区町村コード] [日付]
+```
+
+LINE通知なし
+```
+$ node watch.js [市区町村コード] [日付] [LINE Notify トークン]
 ```
 
 ## Sample
 
 ```
-$ node watch.js abcdefgabcdefgabcdefga 131130 2021-08-18
+$ node watch.js 131130 2021-08-18 abcdefgabcdefgabcdefga
 2021-08-18 NHK渋谷フレンドシップシアター 午後16
 2021-08-18 NHK渋谷フレンドシップシアター 午後17
 2021-08-18 NHK渋谷フレンドシップシアター 午後18
