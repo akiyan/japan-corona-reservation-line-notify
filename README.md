@@ -14,12 +14,12 @@
 
 ## Usage
 
-LINE通知あり
+LINE通知なし
 ```
 $ node watch.js [市区町村コード] [日付]
 ```
 
-LINE通知なし
+LINE通知あり
 ```
 $ node watch.js [市区町村コード] [日付] [LINE Notify トークン]
 ```
