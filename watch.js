@@ -4,7 +4,7 @@ import querystring from 'querystring';
 
 commander.parse(process.argv);
 const code = commander.args[0];
-const dates = [commander.args[1]];
+const dates = commander.args[1].split(',');
 const token = commander.args[2];
 
 (async function() {
