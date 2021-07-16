@@ -29,21 +29,23 @@ const token = commander.args[2];
     });
   }
 
-  if (times.length > 0 && token) {
+  if (times.length > 0) {
     console.log(times.join("\r\n"));
-    await axios({
-      method: 'post',
-      url: 'https://notify-api.line.me/api/notify',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      data: querystring.stringify({
-        message: times.join("\r\n"),
-      }),
-    }).then( function(res) {
-    }).catch( function(err) {
-      console.error(err);
-    });
+    if (token) {
+      await axios({
+        method: 'post',
+        url: 'https://notify-api.line.me/api/notify',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        data: querystring.stringify({
+          message: times.join("\r\n"),
+        }),
+      }).then( function(res) {
+      }).catch( function(err) {
+        console.error(err);
+      });
+    }
   }
 })();
