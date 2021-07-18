@@ -2,10 +2,14 @@ import axios from 'axios';
 import commander from 'commander';
 import querystring from 'querystring';
 
-commander.parse(process.argv);
+commander
+  .usage('[place code] [dates (commana separated)]')
+  .option('-t, --token [line notify token]', 'line notify token')
+  .option('-e, --exclude [department name exclude regexp]', 'exclude department name regexp')
+  .parse(process.argv);
 const code = commander.args[0];
 const dates = commander.args[1].split(',');
-const token = commander.args[2];
+const options = commander.opts();
 
 (async function() {
   const places = {};
@@ -22,21 +26,25 @@ const token = commander.args[2];
     await axios.get(url).then(res => {
       res.data.reservation_frame.forEach(v => {
         const last = v.reservation_cnt_limit - v.reservation_cnt;
-        if (last) {
-          times.push(`${date} ${places[v.department].name} ${v.name}`);
+        const department = places[v.department].name;
+        if (last && (!options.exclude || !department.match(options.exclude))) {
+          const time = v.start_at.substr(11, 5);
+          times.push(`${date} ${department} ${time}～`);
         }
       });
     });
   }
+  times.sort();
+
 
   if (times.length > 0) {
     console.log(times.join("\r\n"));
-    if (token) {
+    if (options.token) {
       await axios({
         method: 'post',
         url: 'https://notify-api.line.me/api/notify',
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${options.token}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         data: querystring.stringify({
