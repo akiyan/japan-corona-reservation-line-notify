@@ -10,6 +10,7 @@ commander
 const code = commander.args[0];
 const dates = commander.args[1].split(',');
 const options = commander.opts();
+const now = new Date;
 
 (async function() {
   const places = {};
@@ -27,7 +28,8 @@ const options = commander.opts();
       res.data.reservation_frame.forEach(v => {
         const last = v.reservation_cnt_limit - v.reservation_cnt;
         const department = places[v.department].name;
-        if (last && (!options.exclude || !department.match(options.exclude))) {
+        const d = new Date(v.start_at.replace('+', '.000+'));
+        if (last && now < d && (!options.exclude || !department.match(options.exclude))) {
           const time = v.start_at.substr(11, 5);
           times.push(`${date} ${department} ${time}～`);
         }
